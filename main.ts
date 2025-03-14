@@ -2,14 +2,14 @@ function 发射机构 () {
     if (发射机构索引 == 0) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 0)
         basic.pause(500)
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 98)
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 113)
         发射机构索引 = 1
     } else if (发射机构索引 == 1) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 180)
         basic.pause(200)
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 0)
         basic.pause(500)
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 98)
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 113)
         发射机构索引 = 1
     }
 }
@@ -61,7 +61,7 @@ function 爪子机构 () {
 }
 function 遥控移动 () {
     局部_RC_Y = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.LY), 0, 1023, -50, 50)
-    局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, -50, 50)
+    局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, 50, -50)
     if (Math.abs(局部_RC_X) <= 5) {
         局部_RC_X = 0
     }
