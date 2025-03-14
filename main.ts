@@ -23,12 +23,7 @@ function 遥控控制 () {
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Tri)) {
         发射机构()
     }
-    if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Cir)) {
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
-    }
-    if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.X)) {
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 60)
-    }
+    爪子机构()
 }
 function 启动初始化 () {
     basic.showIcon(IconNames.Yes)
@@ -57,12 +52,11 @@ function 速度解算 (v: number, w: number) {
     }
 }
 function 爪子机构 () {
-    if (发射机构索引 == 0) {
+    if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Cir)) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
-        发射机构索引 = 1
-    } else {
+    }
+    if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.X)) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 60)
-        发射机构索引 = 0
     }
 }
 function 遥控移动 () {
