@@ -1,22 +1,27 @@
 function 发射机构 () {
     if (发射机构索引 == 0) {
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 0)
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 210)
         basic.pause(500)
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 113)
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 100)
         发射机构索引 = 1
     } else if (发射机构索引 == 1) {
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 180)
+        if (爪子机构索引 == 1) {
+            neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
+            爪子机构索引 = 0
+            basic.pause(300)
+        }
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 60)
         basic.pause(200)
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 0)
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 210)
         basic.pause(500)
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 113)
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 100)
         发射机构索引 = 1
     }
 }
 function 常量初始化 () {
     爪子机构索引 = 0
     发射机构索引 = 0
-    neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 0)
+    neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 60)
     neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
 }
 function 遥控控制 () {
@@ -54,14 +59,21 @@ function 速度解算 (v: number, w: number) {
 function 爪子机构 () {
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Cir)) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
+        爪子机构索引 = 0
     }
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.X)) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 60)
+        爪子机构索引 = 1
     }
 }
 function 遥控移动 () {
-    局部_RC_Y = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.LY), 0, 1023, -50, 50)
-    局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, 50, -50)
+    if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Right2)) {
+        局部_RC_Y = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.LY), 0, 1023, -20, 20)
+        局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, 10, -10)
+    } else {
+        局部_RC_Y = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.LY), 0, 1023, -50, 50)
+        局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, 50, -50)
+    }
     if (Math.abs(局部_RC_X) <= 5) {
         局部_RC_X = 0
     }
