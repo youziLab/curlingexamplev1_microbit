@@ -4,7 +4,7 @@ function 发射机构 () {
         nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CCW, 250, nezhaV2.DelayMode.NoDelay)
         basic.pause(500)
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 100)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 340, nezhaV2.DelayMode.NoDelay)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 355, nezhaV2.DelayMode.NoDelay)
         发射机构索引 = 1
     } else if (发射机构索引 == 1) {
         if (爪子机构索引 == 1) {
@@ -20,7 +20,7 @@ function 发射机构 () {
         nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CCW, 250, nezhaV2.DelayMode.NoDelay)
         basic.pause(500)
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 100)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 340, nezhaV2.DelayMode.NoDelay)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 355, nezhaV2.DelayMode.NoDelay)
         发射机构索引 = 1
     }
 }
@@ -59,23 +59,23 @@ function 速度解算 (v: number, w: number) {
     }
     if (速度解算局部_MAX > 100) {
         nezhaV2.comboStart(速度解算局部_v1 / 速度解算局部_MAX * 100 * -1, 速度解算局部_v2 / 速度解算局部_MAX * 100 * -1)
-        neZha.setMotorSpeed(neZha.MotorList.M1, 速度解算局部_v1 / 速度解算局部_MAX * 100 * -1)
-        neZha.setMotorSpeed(neZha.MotorList.M2, 速度解算局部_v2 / 速度解算局部_MAX * 100 * 1)
+        neZha.setMotorSpeed(neZha.MotorList.M1, 速度解算局部_v1 / 速度解算局部_MAX * 100 * 1)
+        neZha.setMotorSpeed(neZha.MotorList.M2, 速度解算局部_v2 / 速度解算局部_MAX * 100 * -1)
     } else {
         nezhaV2.comboStart(速度解算局部_v1 * -1, 速度解算局部_v2 * -1)
-        neZha.setMotorSpeed(neZha.MotorList.M1, 速度解算局部_v1 * -1)
-        neZha.setMotorSpeed(neZha.MotorList.M2, 速度解算局部_v2 * 1)
+        neZha.setMotorSpeed(neZha.MotorList.M1, 速度解算局部_v1 * 1)
+        neZha.setMotorSpeed(neZha.MotorList.M2, 速度解算局部_v2 * -1)
     }
 }
 function 爪子机构 () {
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Cir)) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, 350, nezhaV2.DelayMode.AutoDelayStatus)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, 350, nezhaV2.DelayMode.NoDelay)
         爪子机构索引 = 0
     }
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.X)) {
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 60)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, 295, nezhaV2.DelayMode.AutoDelayStatus)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, 295, nezhaV2.DelayMode.NoDelay)
         爪子机构索引 = 1
     }
 }
