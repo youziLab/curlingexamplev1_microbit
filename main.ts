@@ -4,7 +4,7 @@ function 发射机构 () {
         nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CCW, 250, nezhaV2.DelayMode.NoDelay)
         basic.pause(500)
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 100)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 355, nezhaV2.DelayMode.NoDelay)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 345, nezhaV2.DelayMode.NoDelay)
         发射机构索引 = 1
     } else if (发射机构索引 == 1) {
         if (爪子机构索引 == 1) {
@@ -20,7 +20,7 @@ function 发射机构 () {
         nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CCW, 250, nezhaV2.DelayMode.NoDelay)
         basic.pause(500)
         neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S1, 100)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 355, nezhaV2.DelayMode.NoDelay)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M3, nezhaV2.ServoMotionMode.CW, 345, nezhaV2.DelayMode.NoDelay)
         发射机构索引 = 1
     }
 }
@@ -32,6 +32,10 @@ function 常量初始化 () {
     neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
     nezhaV2.reset(nezhaV2.MotorPostion.M3)
     nezhaV2.reset(nezhaV2.MotorPostion.M4)
+    V1张开角度 = 10
+    V2张开角度 = 350
+    V1闭合角度 = 60
+    V2闭合角度 = 295
 }
 function 遥控控制 () {
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Tri)) {
@@ -40,6 +44,8 @@ function 遥控控制 () {
     爪子机构()
 }
 function 启动初始化 () {
+    neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, V1张开角度)
+    nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, V2张开角度, nezhaV2.DelayMode.NoDelay)
     basic.showIcon(IconNames.Yes)
 }
 // 运动模型正解:已知小车线速度、角速度 计算 左右轮的线速度
@@ -69,13 +75,22 @@ function 速度解算 (v: number, w: number) {
 }
 function 爪子机构 () {
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Cir)) {
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, 350, nezhaV2.DelayMode.NoDelay)
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, V1张开角度)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, V2张开角度, nezhaV2.DelayMode.NoDelay)
         爪子机构索引 = 0
     }
     if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.X)) {
-        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 60)
-        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, 295, nezhaV2.DelayMode.NoDelay)
+        if (爪子机构索引 == 0) {
+            V1闭合角度递增 = V1闭合角度
+            V2闭合角度递增 = V2闭合角度
+            递增次数标记 = 0
+        } else if (递增次数标记 <= 3) {
+            V1闭合角度递增 += 5
+            V2闭合角度递增 += -5
+            递增次数标记 += 1
+        }
+        neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, V1闭合角度递增)
+        nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, V2闭合角度递增, nezhaV2.DelayMode.NoDelay)
         爪子机构索引 = 1
     }
 }
@@ -97,9 +112,16 @@ function 遥控移动 () {
 }
 let 局部_RC_X = 0
 let 局部_RC_Y = 0
+let V2闭合角度递增 = 0
+let V1闭合角度递增 = 0
+let 递增次数标记 = 0
 let 速度解算局部_MAX = 0
 let 速度解算局部_v2 = 0
 let 速度解算局部_v1 = 0
+let V2闭合角度 = 0
+let V1闭合角度 = 0
+let V2张开角度 = 0
+let V1张开角度 = 0
 let 爪子机构索引 = 0
 let 发射机构索引 = 0
 常量初始化()
