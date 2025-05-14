@@ -8,8 +8,8 @@ function 发射机构 () {
         发射机构索引 = 1
     } else if (发射机构索引 == 1) {
         if (爪子机构索引 == 1) {
-            neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, 10)
-            nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, 0, nezhaV2.DelayMode.NoDelay)
+            neZha.setServoAngel(neZha.ServoTypeList._360, neZha.ServoList.S2, V1张开角度)
+            nezhaV2.moveToAbsAngle(nezhaV2.MotorPostion.M4, nezhaV2.ServoMotionMode.ShortPath, V2张开角度, nezhaV2.DelayMode.NoDelay)
             爪子机构索引 = 0
             basic.pause(300)
         }
