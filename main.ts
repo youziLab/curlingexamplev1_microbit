@@ -95,20 +95,18 @@ function 爪子机构 () {
     }
 }
 function 遥控移动 () {
-    局部_RC_Y = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.LY), 0, 1023, -1000, 1000) * 1
-    局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, -1000, 1000) * 1
+    if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Right2)) {
+        局部_RC_Y = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.LY), 0, 1023, -20, 20)
+        局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, -10, 10)
+    } else {
+        局部_RC_Y = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.LY), 0, 1023, -60, 60)
+        局部_RC_X = Math.map(PlanetX_Basic.GetAnalogValue(PlanetX_Basic.value_A.RX), 0, 1023, -60, 60)
+    }
     if (Math.abs(局部_RC_X) <= 5) {
         局部_RC_X = 0
     }
     if (Math.abs(局部_RC_Y) <= 5) {
         局部_RC_Y = 0
-    }
-    if (PlanetX_Basic.get_Attention_Value(PlanetX_Basic.value_level.Right2)) {
-        局部_RC_Y = Math.map(局部_RC_Y, -1000, 1000, -20, 20) * 1
-        局部_RC_X = Math.map(局部_RC_X, -1000, 1000, -10, 10) * 1
-    } else {
-        局部_RC_Y = Math.map(局部_RC_Y, -1000, 1000, -60, 60) * 1
-        局部_RC_X = Math.map(局部_RC_X, -1000, 1000, -60, 60) * 1
     }
     速度解算(局部_RC_Y, 局部_RC_X)
 }
